@@ -1,9 +1,9 @@
 import React from 'react';
-import CmtList from './pages/cmtList/CmtList.jsx'
+import Index from './pages/index.jsx'
 
 function App() {
   return (
-    <CmtList></CmtList>
+    <Index></Index>
   );
 }
 

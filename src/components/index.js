@@ -1,5 +1,9 @@
-import ComListItem from './comListItem/ComListItem.jsx';
+import Home from './home.jsx';
+import My from './my.jsx';
+import Aboot from './aboot.jsx';
 
 export {
-  ComListItem, //评论列表
+  Home,
+  My,
+  Aboot
 }
