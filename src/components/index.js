@@ -1,9 +1,5 @@
-import Home from './home.jsx';
-import My from './my.jsx';
-import Aboot from './aboot.jsx';
+import Header from './header/header.jsx'
 
 export {
-  Home,
-  My,
-  Aboot
+  Header,//首页头部
 }

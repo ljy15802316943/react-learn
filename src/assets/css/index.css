@@ -1,36 +1,50 @@
 html, body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   width: 100%;
   height: 100%;
   padding: 0;
   margin: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+input {
+  border: none;
+  outline: none;
 }
 
 ul, li, div, h1,h2,h3,h4,h5,h6, p {
   list-style: none;
-  padding: 0;                                                                                                                                                                                                                                                                                                                   
+  padding: 0;
   margin: 0;
 }
 
+a {
+  text-decoration:none;
+}
+a:link {
+  text-decoration: none;
+}
 .color-ffffff {color: #ffffff;}
 .color-09568e {color: #09568e;}
 .color-2a2a2a {color: #2a2a2a;}
 .color-999999 {color: #999999;}
 .color-8C8C8C {color: #8C8C8C;}
 .color-e80110 {color: #e80110;}
+.color-e2a604 {color: #e2a604;}
 
 .bg-8C8C8C {color: #8C8C8C;}
 .bg-09568e {color: #09568e;}
 .ft-size {font-size: 16px;}
+.rad2 {
+  border-radius: 2px;
+}
+.rad5 {
+  border-radius: 5px;
+}
+.p-t100 {padding-top: 100px;box-sizing: border-box;}
+.m-t100 {margin-top: 100px;}
+/* 最小宽度 */
+.m-w1200 {min-width: 1200px;}
+/* 鼠标形状 */
+.cursor { cursor: pointer;}
 
 /* 单行省略 */
 .ellipsis {
@@ -41,59 +55,35 @@ ul, li, div, h1,h2,h3,h4,h5,h6, p {
 
 /* 多行省略 */
 .more-ellipsis {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-}
-
-/* 分割线 */
-.dividerLine {
-  width: 100%;
-  height: 8px;
-  background: #ededed;
-}html, body {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-ul, li, div, h1,h2,h3,h4,h5,h6, p {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.color-ffffff {color: #ffffff;}
-.color-09568e {color: #09568e;}
-.color-2a2a2a {color: #2a2a2a;}
-.color-999999 {color: #999999;}
-.color-8C8C8C {color: #8C8C8C;}
-.color-e80110 {color: #e80110;}
-
-.bg-8C8C8C {color: #8C8C8C;}
-.bg-09568e {color: #09568e;}
-.ft-size {font-size: 16px;}
-
-.threads {
-  padding-top: 55px;
-  box-sizing: border-box;
-}
-
-/* 单行省略 */
-.ellipsis {
-  overflow: hidden;
+  overflow:hidden; 
   text-overflow:ellipsis;
-  white-space: nowrap;
+  word-break:break-all;
+  display:-webkit-box; 
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2; 
 }
 
-/* 多行省略 */
-.more-ellipsis {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
+/* 禁止文字选取 */
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently */
+}
+
+/* 分页样式 */
+.paging {
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+/* 表情包样式 */
+.emojiImg {
+  width: 20px;
+  object-fit: cover;
 }
 
 /* 分割线 */
@@ -101,4 +91,11 @@ ul, li, div, h1,h2,h3,h4,h5,h6, p {
   width: 100%;
   height: 8px;
   background: #ededed;
+}
+
+.el-loading-spinner .el-loading-text {
+  font-size: 16px !important;
+}
+.el-icon-loading:before {
+  font-size: 50px;
 }
