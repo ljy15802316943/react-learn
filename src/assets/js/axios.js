@@ -1,17 +1,9 @@
 import axios from 'axios'
-
-// 获取缓存中的用户信息, 这是接口返回的信息。
-var user;
-function getUser() {
-  try {
-    if (localStorage.getItem('user')) {
-      user = JSON.parse(localStorage.getItem('user'));
-    }
-  } catch (error) {
-    console.log(error)
-  }
-}
-
+import { message } from 'antd';
+import { Spin } from 'antd';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import '../css/loading.css';
 
 // 默认域名 
 // axios.defaults.baseURL = "http://10.26.4.123:8080/api/";
@@ -19,12 +11,11 @@ function getUser() {
 axios.defaults.headers["Content-Type"] = "application/json";
 // 响应时间
 axios.defaults.timeout = 10000;
-
 //请求拦截器
 axios.interceptors.request.use(
   config => {
     getUser();//获取用户信息
-    //加载动画
+    showLoading();//显示加载动画
     if(user){
       // 设置统一的请求header
       config.headers.authorization = user.token //授权(每次请求把token带给后台)
@@ -33,7 +24,7 @@ axios.interceptors.request.use(
     return config;
   },
   error => {
-    //关闭加载动画
+    hideLoading();//关闭加载动画
     return Promise.reject(error);
   }
 );
@@ -41,13 +32,13 @@ axios.interceptors.request.use(
 //响应拦截器
 axios.interceptors.response.use(
   response => {
-    //关闭加载动画
+    hideLoading();//关闭加载动画
     if(response.data.returnCode === '0014'){ // 登录失效
-      // localStorage.clear(); // 清除缓存
-      // Toast({
-      //   message: '您的登录已经失效，请重新登录',
-      //   duration: 1500
-      // });
+      localStorage.clear(); // 清除缓存
+      message.success({
+        content: '您的登录已经失效，请重新登录',
+        duration: 2
+      });
       // setTimeout(() => {
       //   router.push("/login")//让用户从新回到登录页面
       // }, 2000)
@@ -55,7 +46,7 @@ axios.interceptors.response.use(
     return response;
   },
   error => {
-    // Toast.clear(); //关闭加载动画
+    hideLoading();//关闭加载动画
     return Promise.resolve(error.response);
   }
 );
@@ -66,10 +57,10 @@ function checkStatus(response) {
     if(response && (response.status === 200 || response.status === 304 || response.status === 400)){
       resolve(response.data);
     }else{
-      // Toast({
-      //   message: '网络异常，请检查网络连接是否正常！',
-      //   duration: 1500
-      // });
+      message.success({
+        content: '网络异常，请检查网络连接是否正常！',
+        duration: 2
+      });
     }
   });
 }
@@ -94,3 +85,23 @@ export default {
     });
   }
 };
+
+// 获取缓存中的用户信息, 这是接口返回的信息。
+var user;
+function getUser() {
+  if (localStorage.getItem('userInfo')) {
+    user = JSON.parse(localStorage.getItem('userInfo'));
+  }
+}
+
+// 显示加载动画
+function showLoading () {
+  let dom = document.createElement('div')
+  dom.setAttribute('id', 'loading')
+  document.body.appendChild(dom)
+  ReactDOM.render(<Spin tip="加载中..." size="large"/>, dom)
+}
+// 隐藏加载动画
+function hideLoading () {
+  document.body.removeChild(document.getElementById('loading'))
+}
