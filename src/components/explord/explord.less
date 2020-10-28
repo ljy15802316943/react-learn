@@ -1,0 +1,47 @@
+.topicBox {
+  width: 100%;
+  height: 390px;
+  position: relative;
+  .mengcheng {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+  .topicBg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .btmBox {
+    width: 100%;
+    height: 150px;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 20;
+    h3 {
+      color: #fff;
+    }
+    img {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    div {
+      color: #fff;
+      span:not(:first-child) {
+        margin-left: 10px;
+      }
+    }
+  }
+}

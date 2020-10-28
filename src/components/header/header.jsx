@@ -172,7 +172,7 @@ class Header extends React.Component {
   }
   // 去登陆
   toLoginLink = () => {
-    this.props.history.replace('/login');
+    this.props.history.push('/login');
   }
 }
 export default (withRouter(Header));

@@ -1,7 +1,7 @@
 import React from 'react';
 import './home.less';
 import { message } from 'antd';
-import { SlideShow, Talent, Forum, Activities } from '../../components';
+import { SlideShow, Talent, Forum, Activities, Explord, Shopping } from '../../components';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -37,7 +37,39 @@ export default class Home extends React.Component {
           </div>
           <div className="Activities">
             <h3 className="title">活动招募</h3>
-            <Activities activity={this.state.pcMain.activity} />
+            <ul className="activitiesUl">
+              {
+                this.state.pcMain.activity && this.state.pcMain.activity.slice(0,3).map(v => 
+                  <li className="activitiesLi" key={v.id}>
+                    <Activities {...v} />
+                  </li>
+                )
+              }
+            </ul>
+          </div>
+          <div className="topic">
+            <h3 className="title">风迷话题</h3>
+            <ul className="topicUl">
+              {
+                this.state.pcMain.explord && this.state.pcMain.explord.slice(0,4).map(v => 
+                  <li className="topicLi" key={v.id}>
+                    <Explord {...v} />
+                  </li>
+                )
+              }
+            </ul>
+          </div>
+          <div className="shopping">
+            <h3 className="title">风迷商城</h3>
+            <ul className="shoppingUl">
+              {
+                this.state.pcMain.hot && this.state.pcMain.hot.slice(0,4).map(v => 
+                  <li className="shoppingLi" key={v.id}>
+                    <Shopping {...v} />
+                  </li>
+                )
+              }
+            </ul>
           </div>
         </div>
       </div>
@@ -60,11 +92,13 @@ export default class Home extends React.Component {
     let { pcMain } = this.state;
     let index = pcMain.famousMan.findIndex(v => v.accountId === id);
     React.$axios.post(React.$api.MEMBER_FOLLOW, {accountId: id}).then((res) => {
-      message.success(res.msg);
-      pcMain.famousMan[index].isFollow = res.data.status;
-      this.setState({
-        pcMain
-      })
+      if (res.returnCode === '200') {
+        message.success(res.msg);
+        pcMain.famousMan[index].isFollow = res.data.status;
+        this.setState({
+          pcMain
+        })
+      }
     })
   }
 }

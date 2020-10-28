@@ -1,0 +1,53 @@
+.app {
+  min-width: 1200px;
+  background: #F9FAFD;
+  .mainBox {
+    position: relative;
+    .sideBox {
+      width: 80px;
+      height: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: fixed;
+      top: 30%;
+      right: 6%;
+      z-index: 20;
+      div {
+        width: 100%;
+        height: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #08568D;
+        border-radius: 3px;
+        .iconfont {
+          font-size: 22px;
+        }
+        span {
+          color: #fff;
+          font-size: 14px;
+        }
+      }
+      .backTop {
+        background: #999999;
+      }
+    }
+    /*浏览器宽度低于1300px*/
+    @media only screen and (max-width: 1300px) {
+      .sideBox {
+        right: 8px;
+      }
+    }
+    /*宽度高于1300*/
+    @media only screen and (min-width: 1300px) {
+      .sideBox {
+        right: -moz-calc(50% - (690px));
+        right: -webkit-calc(50% - (690px));
+        right: -o-calc(50% - (690px));
+        right: calc(50% - (690px));
+      }
+    }
+  }
+}

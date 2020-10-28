@@ -1,0 +1,116 @@
+.footerBox {
+  width: 100%;
+  height: 100%;
+  padding: 60px 0px 20px 0px;
+  box-sizing: border-box;
+  background: #303030;
+  .pageBox {
+    width: 1200px;
+    min-width: 1200px;
+    margin: auto;
+    .topBox {
+      width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      .letf {
+        width: 250px;
+        height: auto;
+        .logo {
+          width: 150px;
+          object-fit: cover;
+        }
+        p {
+          color: #999999;
+          margin-top: 25px;
+        }
+        .related {
+          width: 200px;
+          height: 35px;
+          color: #999999;
+          padding: 0px 15px;
+          box-sizing: border-box;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: #383838;
+          position: relative;
+          margin-top: 20px;
+          .relatedPopup {
+            width: 100%;
+            height: 35px;
+            color: #fff;
+            background: #000;
+            text-align: center;
+            line-height: 35px;
+            position: absolute;
+            top: -35px;
+            left: 0px;
+            display: none;
+          }
+        }
+      }
+      .right {
+        width: 750px;
+        height: auto;
+        .navBox {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          .navLi {
+            width: 24.5%;
+            overflow: hidden;
+            h3 {
+              color: #fff;
+            }
+            div {
+              color: #999999;
+              margin-top: 15px;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+    .line {
+      width: 100%;
+      border-bottom: 1px solid #3B3B3B;
+      margin-top: 30px;
+    }
+    .btmIntroduce {
+      color: #666666;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+      .btmLeft {
+        display: flex;
+        align-items: center;
+        img {
+          margin-left: 6px;
+        }
+        span:not(:first-child) {
+          margin: 0px 6px;
+        }
+      }
+      .btmRight {
+        .btmTitle {
+          color: #999999;
+          margin-right: 5px;
+        }
+        img {
+          margin: 0px 6px;
+        }
+      }
+    }
+    .btmImg {
+      width: 100%;
+      height: 160px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 65px;
+        object-fit: cover;
+      }
+    }
+  }
+}

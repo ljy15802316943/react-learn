@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import '../css/loading.css';
 
+
 // 默认域名 
 // axios.defaults.baseURL = "http://10.26.4.123:8080/api/";
 // 配置请求头
@@ -39,9 +40,10 @@ axios.interceptors.response.use(
         content: '您的登录已经失效，请重新登录',
         duration: 2
       });
-      // setTimeout(() => {
-      //   router.push("/login")//让用户从新回到登录页面
-      // }, 2000)
+      setTimeout(() => {
+        //让用户从新回到登录页面
+        window._ROUTER_.push('/login');//router是在顶级入口app.js文件里面配置的 window._ROUTER_ = this.props.history;
+      }, 2000)
     }
     return response;
   },
