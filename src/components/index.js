@@ -8,6 +8,7 @@ import Shopping from './shopping/shopping.jsx'
 import Footer from './footer/footer.jsx'
 import Preview from './preview/preview.jsx'
 import Editor from './Editor/Editor.jsx'
+import PostItem from './postItem/postItem.jsx'
 import Emoji from './emoji/emoji.jsx'
 
 export {
@@ -21,5 +22,6 @@ export {
   Footer,//底部栏
   Preview,//图片预览
   Editor,//富文本
+  PostItem,//发帖详情
   Emoji,//表情包
 }

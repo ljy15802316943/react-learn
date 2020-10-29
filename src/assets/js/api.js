@@ -23,8 +23,12 @@ const HOME_FORUMTYPE = '/club/home/forumtype'
 const MEMBER_INFO = '/web/member/info'
 // 点击关注
 const MEMBER_FOLLOW = '/club/member/follow'
+// 点击关注
+const HOME_HOME_SUBMIT = '/club/home/home_submit'
 // 底部数据
 const PC_FOOTER = '/club/explord/pc_footer'
+// 车型分类列表
+const HOME_HOME_LIST = '/club/home/home_list'
 
 export default {
   MEMBER_SIGNIN,
@@ -37,5 +41,6 @@ export default {
   API_PIC,
   API_MEMBER_UPLOAD,
   API_OSS_POLICY,
-
+  HOME_HOME_SUBMIT,
+  HOME_HOME_LIST,
 }

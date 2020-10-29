@@ -2,7 +2,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import './header.less'
 import { Menu,Popover } from 'antd';
-import {withRouter} from 'react-router-dom';
+import { withRouter} from 'react-router-dom';
 
 const { SubMenu } = Menu;
 class Header extends React.Component {
@@ -13,6 +13,7 @@ class Header extends React.Component {
       userInfo:{},//用户登录信息
       userAllInfo: {},//用户全部信息
       carClass: [],//车型分类数据
+      navKey: '',//防止重复点击导航
       rhghtNavList: [//个人信息列表
         {
           id: 1,
@@ -68,7 +69,7 @@ class Header extends React.Component {
           {/* 导航菜单 */}
           <div className="menuBox">
             <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
-              <Menu.Item key="1">首页</Menu.Item>
+              <Menu.Item key="/">首页</Menu.Item>
               <SubMenu key="2" title="风迷之家">
                 {
                   this.state.carClass.map(
@@ -78,6 +79,7 @@ class Header extends React.Component {
               </SubMenu>
               <Menu.Item key="3" >风迷圈</Menu.Item>
               <Menu.Item key="4" >风迷话题</Menu.Item>
+
               <Menu.Item key="5" >活动招募</Menu.Item>
               <Menu.Item key="6" >风迷商城</Menu.Item>
             </Menu>
@@ -105,6 +107,7 @@ class Header extends React.Component {
   componentDidMount() {
     this.getUserInfo();// 获取用户登录信息
     this.getCarClass();// 获取车型分类
+
   }
   // 监听路由变化，如果是首页则读取本地缓存
   componentWillReceiveProps(nextProps) {
@@ -148,14 +151,38 @@ class Header extends React.Component {
       userInfo,
       rightNavList
     });
+
+    // 获取导航索引
+    if (localStorage.getItem('menvIndex')) {
+      this.setState({
+        current: JSON.parse(localStorage.getItem('menvIndex'))
+      })
+    }
   }
-  // 点击车型分类
+  // 车型分类详情
   carClassBtn =(id)=> {
-    console.log(id)
+    this.props.history.push({
+      pathname:'/forumDetail',// 跳转地址
+      state:{ id }
+    })
   }
-  handleClick = e => {
-    console.log('click ', e);
-    this.setState({ current: e.key });
+  handleClick =(e)=> {
+    console.log(e.key)
+    // 缓存点击的路由，作用是当前页面刷新保持导航索引高亮
+    localStorage.setItem('menvIndex',JSON.stringify(e.key));
+
+    // 防止重复点击
+    let { navKey } = this.state;
+    if (navKey === e.key) return;
+
+    navKey = e.key
+    this.setState({ current: e.key,navKey });
+
+    let key = e.key.split(':')[0];
+    if (key === 'setting') {
+      return
+    };
+    this.props.history.push(e.key);
   }
   // 跳转官网
   goLink = (url) => {

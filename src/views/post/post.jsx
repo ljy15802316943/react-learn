@@ -1,29 +1,28 @@
 import React from 'react';
 import './post.less'
-import { Form, Input, Select, Tooltip, Button, Upload } from 'antd';
+import { message, Form, Input, Select, Tooltip, Button, Upload } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Editor, Emoji } from '../../components';
 
 
 const { Option } = Select;
 let editorValue = '';//富文本内容
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
-}
+
 export default class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       visible: false,//控制 tooltip 显示隐藏。
-      previewVisible: false,
-      previewImage: '',
-      previewTitle: '',
-      fileList: [],
+      fileList: [],//获取上传图片
+      pcMain: {},//获取本地缓存首页数据
+      form: {//表单提交数据
+        title: '',//标题
+        cover: '',//图片
+        content: '',//富文本内容
+        forumId: '',//车型分类id
+        photo: '',
+        type: 0,
+      },
       header: { //上传参数
         'authorization': '',
         'Platform': 7
@@ -43,13 +42,13 @@ export default class Post extends React.Component {
         <div className="pageBox">
           <h1 className="title">发布帖子</h1>
           {/* 表单提交 */}
-          <Form className="form">
+          <Form className="form" onFinish={this.onFinish}>
             <Form.Item
               label="标题"
               name="标题"
               rules={[{required: true, message: 'Please input your username!',}]}
             >
-              <Input />
+              <Input onChange={this.titleInputChange} value={this.state.title} />
             </Form.Item>
             <Form.Item name="板块" label="板块" rules={[{ required: true }]}>
               <Select
@@ -57,9 +56,9 @@ export default class Post extends React.Component {
                 onChange={this.selectChange}
                 allowClear
               >
-                <Option value="male">male</Option>
-                <Option value="female">female</Option>
-                <Option value="other">other</Option>
+                {
+                  this.state.pcMain.forum && this.state.pcMain.forum.map(v => <Option key={v.carId} value={v.id}>{v.title}</Option>)
+                }
               </Select>
             </Form.Item>
             <Form.Item label="标签"></Form.Item>
@@ -90,7 +89,6 @@ export default class Post extends React.Component {
                   name="files"
                   listType="picture-card"
                   fileList={this.state.fileList}
-                  onPreview={this.handlePreview}
                   onChange={this.handleChange}
                 >
                   {/* 显示图片数量 */}
@@ -110,38 +108,51 @@ export default class Post extends React.Component {
     )
   }
   componentDidMount() {
-    let { header } = this.state;
+    let { header, pcMain } = this.state;
+    // 获取缓存的用户信息
     if (localStorage.getItem('userInfo')) {
       let userInfo = JSON.parse(localStorage.getItem('userInfo'));
       header['authorization'] = userInfo['token'];
-      this.setState({
-        header
-      },function() {
-        console.log(this.state)
-      })
     };
-  }
-  handlePreview = async file => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
+    // 获取缓存的首页数据
+    if (localStorage.getItem('pcMain')) {
+      pcMain = JSON.parse(localStorage.getItem('pcMain'));
     }
     this.setState({
-      previewImage: file.url || file.preview,
-      previewVisible: true,
-      previewTitle: file.name || file.url.substring(file.url.lastIndexOf('/') + 1),
-    });
-  };
-  handleChange =({ fileList })=> {
-    this.setState({ fileList });
-  };
-  // 车型分类
+      header,
+      pcMain
+    })
+  }
+  // 获取标题输入值
+  titleInputChange =(e)=> {
+    let { form } = this.state;
+    form['title'] = e.target.value;
+    this.setState({
+      form
+    })
+  }
+  // 获取车型分类id
   selectChange =(e)=> {
-    console.log(e);
+    let { form } = this.state;
+    form['forumId'] = e;
+    this.setState({
+      form
+    })
   }
   // 获取富文本输入内容
   EditorChange =(e)=> {
     editorValue = e.toHTML();//富文本格式转换
   }
+  // 获取上传图片信息
+  handleChange =({ fileList })=> {
+    let { form } = this.state;
+    if (fileList[0].response) {
+      form.cover = fileList[0].response.files[0].url;
+      this.setState({ 
+        fileList,form 
+      });
+    }
+  };
   // 打开表情包
   emojiBtn =()=> {
     this.setState({
@@ -158,5 +169,24 @@ export default class Post extends React.Component {
   selectEmoji =(e)=> {
     editorValue += e;
   }
-  
+  // 提交表单
+  onFinish =(e)=> {
+    if (e) {//表单验证成功了
+      let { form } = this.state;
+      form.content = editorValue.trim();//获取富文本内容并去除两边空格
+      if (!form.content) {
+        message.warning('请输入内容');
+        return
+      };
+      this.setState({ form });
+      React.$axios.post(React.$api.HOME_HOME_SUBMIT, form).then((res) => {
+        message.success(res.msg);
+        if (res.returnCode === "200") {
+          setTimeout(() => {
+            this.props.history.push('/');
+          }, 1000)
+        }
+      });
+    } 
+  }
 }
